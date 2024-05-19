@@ -1,0 +1,8 @@
+[build]
+  base = "./"
+  publish = "./dist/"
+  command = "npm run build"
+
+[template.environment]
+  NAME = "Kak Caca"
+  PIC = "enter web url of the receiver's image"
