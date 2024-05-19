@@ -47,11 +47,13 @@ const setRemoteData = async () => {
       res = await axios.get(
         `https://api.telegra.ph/getPage/${article}?return_content=true`
       );
-      const { content } = res.data.result;
-      markup = content.reduce(
-        (string, node) => string + generateMarkupRemote(node),
-        ""
-      );
+      if (res.data.result && res.data.result.content) { // Periksa apakah properti 'content' ada
+        const { content } = res.data.result;
+        markup = content.reduce(
+          (string, node) => string + generateMarkupRemote(node),
+          ""
+        );
+      }
     }
     await setPic(pic);
     genIndex(markup);
@@ -59,6 +61,7 @@ const setRemoteData = async () => {
     throw new Error(e.message);
   }
 };
+
 
 if (process.argv[2] === "--local") setLocalData();
 else if (process.argv[2] === "--remote") setRemoteData();
